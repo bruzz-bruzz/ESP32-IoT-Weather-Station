@@ -56,7 +56,7 @@ export default function About(){
                     </div>
                 </section>
                 <footer className='border-t border-[#cbdcd5] pt-5'>
-                    <Github repoURL="A" profileURL="B"/>
+                    <Github repoURL="https://github.com/bruzz-bruzz/esp32-iot-weather-station-" profileURL="https://github.com/bruzz-bruzz"/>
                 </footer>
             </div>
         </main>

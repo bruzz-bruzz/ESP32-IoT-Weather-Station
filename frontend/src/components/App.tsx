@@ -6,12 +6,18 @@ import './App.css'
 export default function App(){
   const [logData,setLogData] = useState<any[]>([])
   const [loading,setLoading] = useState(false)
+  const [currPage,setCurrPage] = useState(0)
+  const [pages,setPages] = useState(0) //10 logs per page
   async function loadData(){
     setLoading(true)
     try{
       const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/getData`)
       setLogData(res.data.data)
+      setCurrPage(0)
+      setPages(Math.floor(res.data.data.length / 10))
     } catch(e){
+      setCurrPage(0)
+      setPages(0)
       console.error(e)
     }
     setLoading(false)
@@ -48,6 +54,7 @@ export default function App(){
         ) : logData.length === 0 ? (
           <div className='px-6 py-16 text-center text-[#728681]'>No sensor readings are available yet.</div>
         ) : (
+          <div>
           <div className='overflow-x-auto'>
             <table className='w-full min-w-[800px] border-collapse text-right'>
               <thead className='bg-[#f4f8f5] text-[0.68rem] uppercase tracking-[0.08em] text-[#668078]'>
@@ -61,7 +68,7 @@ export default function App(){
                 </tr>
               </thead>
               <tbody>
-                {logData.map((item:any,idx:number)=>(
+                {logData.slice((currPage) * 10,(currPage + 1) * 10).map((item:any,idx:number)=>(
                   <tr key={idx} className='border-b border-[#e7efeb] transition-colors even:bg-[#fbfdfb] hover:bg-[#eef8f3] last:border-b-0'>
                     <td className='px-6 py-4 text-left text-[0.82rem] tabular-nums text-[#60746f]'>{new Date(Date.parse(item.created_at)).toLocaleString()}</td>
                     <td className='px-6 py-4 text-[0.9rem] tabular-nums text-[#29484a]'>{item.humidity}</td>
@@ -74,9 +81,27 @@ export default function App(){
               </tbody>
             </table>
           </div>
+          <div className='flex justify-center items-center'>
+              <button className='m-2 text-center bg-[#f4f8f5] p-2 hover:cursor-pointer' title='Go back by one page' onClick={()=>{
+                setCurrPage(page => {
+                  if(page === 0){
+                    return page
+                  } return page - 1
+                })
+              }}>Back</button>
+              <p className='m-2 text-center p-2'>{currPage + 1} of {pages + 1}</p>
+              <button  className='m-2 text-center bg-[#f4f8f5] p-2 hover:cursor-pointer' title='Go to the next page' onClick={()=>{
+                setCurrPage(page => {
+                  if(page === pages){
+                    return page
+                  } return page + 1
+                })
+              }}>Next</button>
+          </div>
+          </div>
         )}
       </section>
-      <Github repoURL="A" profileURL="B"/>
+      <Github repoURL="https://github.com/bruzz-bruzz/esp32-iot-weather-station-" profileURL="https://github.com/bruzz-bruzz"/>
     </main>
   )
 }
