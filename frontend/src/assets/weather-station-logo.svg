@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title desc">
+  <title id="title">IoT Weather Station logo</title>
+  <desc id="desc">A teal weather station with a rising sun and sensor signal.</desc>
+  <rect width="160" height="160" rx="34" fill="#173042"/>
+  <circle cx="80" cy="69" r="25" fill="#D9914B"/>
+  <path d="M80 27v-9M80 120v-9M38 69h-9M131 69h-9M50 39l-7-7M117 106l-7-7M110 39l7-7M43 106l7-7" stroke="#F2C27D" stroke-width="6" stroke-linecap="round"/>
+  <path d="M34 116c9-16 27-25 46-25s37 9 46 25" fill="none" stroke="#E9F4EF" stroke-width="8" stroke-linecap="round"/>
+  <path d="M48 126h64" stroke="#2DA277" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="80" cy="116" r="7" fill="#2DA277" stroke="#E9F4EF" stroke-width="4"/>
+</svg>
