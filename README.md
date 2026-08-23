@@ -62,8 +62,6 @@ The case was 3D-printed using white PLA filament. Total print time was about 6 h
 
 Case measurements
 
-![Case Picture](ESP32/Demo.jpeg)
-
 | Dimension | Length (mm)
 | --- | ---
 | Outer width | 95

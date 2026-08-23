@@ -138,7 +138,7 @@ export default function App(){
         </div>
         <div className='inline-flex items-center gap-2.5 whitespace-nowrap rounded-full border border-[#c7ddd5] bg-[#f7fcf8] px-3.5 py-2.5 text-[0.78rem] font-bold text-[#365c58]'>
           <span className='size-2 rounded-full bg-[#2da277] shadow-[0_0_0_4px_#d9f0e4]' />
-          <span>Updates every 15 minutes</span>
+          <span>Updates every 30 minutes</span>
         </div>
       </section>
       <section className='mx-auto w-full max-w-[1180px] overflow-hidden rounded-xl border border-[#d7e2dd] bg-white/80 shadow-[0_18px_45px_rgba(43,79,72,0.1)]' aria-labelledby='readings-title'>
