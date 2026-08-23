@@ -2,10 +2,22 @@ import {useState,useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 import Github from './Github.tsx'
+import Chart from './Chart.tsx'
 import './App.css'
+type showDataType = 'Graph' | 'Table'
+type chartGraphDataTypes = 'Humidity' | 'Pressure' | 'Temperature' | 'Light Intensity' | 'VOC Index'
 export default function App(){
+  const displayMap = {
+    'Humidity':"Humidity (%)",
+    "Temperature":"Temperature (°C)",
+    "VOC Index":"VOC Index (1-500)",
+    "Pressure":"Pressure (hPa)",
+    "Light Intensity":"Light Intensity (Lux)"
+  }
   const [logData,setLogData] = useState<any[]>([])
   const [loading,setLoading] = useState(false)
+  const [dataType,setDataType] = useState<showDataType>("Graph")
+  const [graphType,setGraphType] = useState<chartGraphDataTypes>("Humidity")
   const [currPage,setCurrPage] = useState(0)
   const [pages,setPages] = useState(0) //10 logs per page
   async function loadData(){
@@ -21,6 +33,94 @@ export default function App(){
       console.error(e)
     }
     setLoading(false)
+  }
+  function constructGraphData(){
+    let labels:string[] = []
+    let humidity:number[] = []
+    let temperature:number[] = []
+    let voc_index:number[] = []
+    let pressure:number[] = []
+    let light_intensity:number[] = []
+    for(let i = 0; i < logData.length; i++){
+      labels.push(new Date(Date.parse(logData[i].created_at)).toLocaleString())
+      if(graphType === 'Humidity'){
+        humidity.push(logData[i].humidity)
+      }
+      if(graphType === 'Temperature'){
+        temperature.push(logData[i].temperature)
+      }
+      if(graphType === 'VOC Index'){
+        voc_index.push(logData[i].voc_index)
+      }
+      if(graphType === 'Pressure'){
+        pressure.push(logData[i].pressure)
+      }
+      if(graphType === "Light Intensity"){
+        light_intensity.push(logData[i].light_intensity)
+      }
+    }
+    let returnData = {
+      labels:labels,
+      datasets:[
+        {
+        label:"Humidity (%)",
+        data:humidity,
+        borderColor: 'rgb(75, 192, 192)',
+        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+        tension: 0.2
+        },
+        {
+        label:"Pressure (hPa)",
+        data:pressure,
+        borderColor: 'rgb(115, 255, 0)',
+        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+        tension: 0.2
+        },
+        {
+        label:"Temperature (°C)",
+        data:temperature,
+        borderColor: 'rgb(236, 29, 14)',
+        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+        tension: 0.2
+        },
+        {
+        label:"VOC Index (1-500)",
+        data:voc_index,
+        borderColor: 'rgb(201, 24, 255)',
+        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+        tension: 0.2
+        },
+        {
+        label:"Light intensity (Lux)",
+        data:light_intensity,
+        borderColor: 'rgb(203, 236, 14)',
+        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+        tension: 0.2
+        },
+      ]
+    }
+    return returnData
+  }
+  function getAverageForChart(){
+    let sum = 0
+    for(let i = 0; i < logData.length; i++){
+      if(graphType === 'Humidity'){
+        sum += logData[i].humidity
+      }
+      if(graphType === 'Temperature'){
+        sum += logData[i].temperature
+      }
+      if(graphType === 'VOC Index'){
+        sum += logData[i].vocIndex
+      }
+      if(graphType === 'Pressure'){
+        sum += logData[i].pressure
+      }
+      if(graphType === 'Light Intensity'){
+        sum += logData[i].light_intensity
+      }
+    }
+    return (sum / logData.length).toFixed(3)
   }
   useEffect(()=>{
     loadData()
@@ -48,12 +148,16 @@ export default function App(){
             <h2 id='readings-title' className='font-serif text-[1.65rem] font-semibold text-[#173042]'>Sensor log</h2>
           </div>
           <span className='rounded-md bg-[#e9f4ef] px-2.5 py-1.5 text-[0.78rem] font-bold text-[#19706a]'>{logData.length} records</span>
+          <div className='grid grid-cols-2'>
+            <button className='m-2 text-center bg-[#f4f8f5] p-2 hover:cursor-pointer' onClick={()=>setDataType("Table")}>Table</button>
+            <button className='m-2 text-center bg-[#f4f8f5] p-2 hover:cursor-pointer' onClick={()=>setDataType("Graph")}>Graph</button>
+          </div>
         </div>
         {loading ? (
           <div className='px-6 py-16 text-center text-[#728681]'>Loading sensor readings...</div>
         ) : logData.length === 0 ? (
           <div className='px-6 py-16 text-center text-[#728681]'>No sensor readings are available yet.</div>
-        ) : (
+        ) : dataType === 'Table' ? (
           <div>
           <div className='overflow-x-auto'>
             <table className='w-full min-w-[800px] border-collapse text-right'>
@@ -90,7 +194,7 @@ export default function App(){
                 })
               }}>Back</button>
               <p className='m-2 text-center p-2'>{currPage + 1} of {pages + 1}</p>
-              <button  className='m-2 text-center bg-[#f4f8f5] p-2 hover:cursor-pointer' title='Go to the next page' onClick={()=>{
+              <button className='m-2 text-center bg-[#f4f8f5] p-2 hover:cursor-pointer' title='Go to the next page' onClick={()=>{
                 setCurrPage(page => {
                   if(page === pages){
                     return page
@@ -99,7 +203,26 @@ export default function App(){
               }}>Next</button>
           </div>
           </div>
-        )}
+        ) : 
+        <div>
+          <div className='overflow-x-auto'>
+            <div className='flex justify-center items-center flex-col'>
+              <select className='border rounded-lg p-2 bg-[#f4f8f5] text-center' value={graphType} onChange={(e)=>setGraphType(e.target.value as chartGraphDataTypes)}>
+                <option value={"Humidity"}>Humidity</option>
+                <option value={"Temperature"}>Temperature</option>
+                <option value={"VOC Index"}>VOC Index</option>
+                <option value={"Pressure"}>Pressure</option>
+                <option value={"Light Intensity"}>Light Intensity</option>
+              </select>
+              <Chart data={constructGraphData()}/>
+              <div className='m-4 p-4 border rounded-lg bg-[#f4f8f5] flex justify-center items-center flex-col'>
+                <h3>Average {displayMap[graphType]}</h3>
+                <p>{getAverageForChart()}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        }
       </section>
       <Github repoURL="https://github.com/bruzz-bruzz/esp32-iot-weather-station-" profileURL="https://github.com/bruzz-bruzz"/>
     </main>
