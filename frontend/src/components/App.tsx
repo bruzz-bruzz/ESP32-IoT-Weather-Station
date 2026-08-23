@@ -120,7 +120,7 @@ export default function App(){
         sum += logData[i].light_intensity
       }
     }
-    return (sum / logData.length).toFixed(3)
+    return isNaN((sum / logData.length)) ? 0: (sum / logData.length).toFixed(3)
   }
   useEffect(()=>{
     loadData()
