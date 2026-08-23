@@ -9,7 +9,7 @@
 #include <Adafruit_SGP40.h>
 
 #define uS_TO_S_FACTOR 1000000ULL  
-#define TIME_TO_SLEEP 900          
+#define TIME_TO_SLEEP 1800          
 #define DHTPIN 4
 #define DHTTYPE DHT11
 #define LIGHT_PIN 34
@@ -61,11 +61,11 @@ void setup() {
   float bmp_temp = bmp.readTemperature();
   float bmp_pressure = bmp.readPressure() / 100.0F;
   int rawADC = analogRead(LIGHT_PIN);
-  if (rawADC >= 4095) rawADC = 4094;
+  if (rawADC >= 4095) rawADC = 4094; 
   if (rawADC <= 0) rawADC = 1;
   float voltage = (rawADC / 4095.0) * 3.3;
-  float ldrResistance = (3.3 - voltage) * 10000.0 / voltage;
-  if (ldrResistance <= 0) ldrResistance = 1; 
+  float ldrResistance = (voltage * 10000.0) / (3.3 - voltage);
+  if (ldrResistance <= 0) ldrResistance = 1;
   float lux = pow((500000.0 / ldrResistance), 1.42857);
   int32_t voc_index = -1;
   if (!isnan(dht_temp) && !isnan(dht_humidity)) {
