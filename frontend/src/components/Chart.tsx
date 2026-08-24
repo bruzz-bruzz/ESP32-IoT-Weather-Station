@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import type {ChartData, ChartOptions} from 'chart.js'
+import type {ChartOptions} from 'chart.js'
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -26,67 +26,51 @@ const options: ChartOptions<'line'> = {
     mode: 'index',
     intersect: false,
   },
-  plugins: {
-    legend: {
-      labels: {
-        usePointStyle: true,
-        pointStyle: 'circle',
-        padding: 20,
-        color: '#31413a',
-        font: {
-          size: 12,
-          weight: 600,
-        },
-      },
+  elements: {
+    line: {
+      tension: 0.38,
+      borderWidth: 3,
+      borderCapStyle: 'round',
+      borderJoinStyle: 'round',
     },
+    point: {
+      radius: 0,
+      hoverRadius: 5,
+      hoverBorderWidth: 2,
+    },
+  },
+  plugins: {
     tooltip: {
-      backgroundColor: '#20332b',
-      titleColor: '#d9f2e4',
-      bodyColor: '#ffffff',
+      displayColors: true,
       padding: 12,
       cornerRadius: 8,
     },
   },
-  scales: {
-    x: {
-      grid: { display: false },
-      ticks: {
-        color: '#718078',
-        maxTicksLimit: 7,
-        maxRotation: 0,
-      },
-      border: { color: '#dbe6df' },
-    },
-    y: {
-      beginAtZero: false,
-      grid: { color: 'rgba(49, 65, 58, 0.09)' },
-      ticks: { color: '#718078', padding: 8 },
-      border: { display: false },
-    },
-  },
 };
-type GivenData = {
-  data: ChartData<'line', number[], string>
+type givenData = {
+    data:{
+        labels:string[],
+        datasets:any[]
+    }
 }
-export default function TypedLineGraph({data}: GivenData) {
-  const visibleData: ChartData<'line', number[], string> = {
+export default function TypedLineGraph({data}:givenData) {
+  const styledData = {
     ...data,
-    datasets: data.datasets
-      .filter(dataset => dataset.data.some(value => value !== null))
-      .map(dataset => ({
-        ...dataset,
-        borderWidth: 3,
-        pointRadius: 0,
-        pointHoverRadius: 5,
-        pointHoverBorderWidth: 2,
-        fill: true,
-        backgroundColor: `${dataset.borderColor}18`,
-      })),
+    datasets: data.datasets.map((dataset) => ({
+      ...dataset,
+      borderWidth: 3,
+      pointRadius: 0,
+      pointHoverRadius: 5,
+      pointHoverBorderWidth: 2,
+      fill: true,
+      backgroundColor: `${dataset.borderColor}18`,
+      spanGaps: true,
+    })),
   }
 
   return (
-    <div className="chart-frame">
-      <Line options={options} data={visibleData} />
+    <div style={{ width: '100%', height: '400px', maxWidth: '800px', margin: '0 auto' }}>
+      <Line options={options} data={styledData} />
     </div>
   );
 }
