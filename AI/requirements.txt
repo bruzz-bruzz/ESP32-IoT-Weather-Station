@@ -1,5 +1,8 @@
 fastapi
 uvicorn
-scikit-learn
+pydantic
 joblib
+apscheduler
 numpy
+scikit-learn
+dotenv
