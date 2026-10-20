@@ -6,7 +6,7 @@ async function a(){
         },
         body:JSON.stringify({
             "features":[Date.parse("2026-10-14T21:04:39.884069+00:00")],
-            "type":"temperature"
+            "type":"pressure"
         })
 
     })
