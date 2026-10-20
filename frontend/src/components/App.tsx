@@ -20,7 +20,7 @@ export default function App(){
   const [graphType,setGraphType] = useState<chartGraphDataTypes>("Humidity")
   const [currPage,setCurrPage] = useState(0)
   const [predictDay,setPredictDay] = useState<Number>(new Date().getTime())
-  const [predictionType,setPredictionType] = useState<'Temperature'|'Pressure'|'Humidity'>("Temperature")
+  const [predictionType,setPredictionType] = useState<'Temperature'|'Pressure'|'Humidity'|'Light Intensity'>("Temperature")
   const [predictionResponse,setPredictionResponse] = useState<null | Number>(null)
   const [isPredicting,setIsPredicting] = useState(false)
   const [pages,setPages] = useState(0) //10 logs per page
@@ -272,6 +272,7 @@ export default function App(){
                   <option value="temperature">Temperature</option>
                   <option value="pressure">Pressure</option>
                   <option value="humidity">Humidity</option>
+                  <option value="light_intensity">Light Intensity</option>
                 </select>
               </div>
               <button 
@@ -286,7 +287,7 @@ export default function App(){
                   <p className='text-gray-500 italic'>No predictions available yet.</p>
                 )}
                 {predictionResponse !== null && isPredicting === false && typeof predictionResponse === 'number' && (
-                  <p className='text-2xl font-bold text-blue-600'>Result: {String(predictionResponse.toFixed(3))}{predictionType === 'Temperature' ? '°C' : predictionType === 'Pressure' ? 'hPa' : '%'}</p>
+                  <p className='text-2xl font-bold text-blue-600'>Result: {String(predictionResponse.toFixed(3))}{predictionType === 'Temperature' ? '°C' : predictionType === 'Pressure' ? 'hPa' : predictionType === 'Humidity' ? '%' : "Lux"}</p>
                 )}
                 {isPredicting === true && (
                   <p className='text-blue-500 animate-pulse'>Predicting...</p>

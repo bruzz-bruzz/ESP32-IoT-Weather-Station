@@ -4,7 +4,7 @@ import numpy as np
 from getData import getData
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import root_mean_squared_error, r2_score, mean_absolute_error
-for col in ['temperature','pressure','humidity']:
+for col in ['temperature','pressure','humidity','light_intensity']:
     m = joblib.load(f'models/{col}.pkl')
     x,y = getData(col)
     x = np.array(x)

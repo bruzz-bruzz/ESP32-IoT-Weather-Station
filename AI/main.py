@@ -9,6 +9,7 @@ def updateModels(app: FastAPI):
     app.state.pressureModel = joblib.load('models/pressure.pkl')
     app.state.humidityModel = joblib.load('models/humidity.pkl')
     app.state.temperatureModel = joblib.load('models/temperature.pkl')
+    app.state.lightIntensityModel = joblib.load('models/light_intensity.pkl')
 def cron(app: FastAPI):
     try:
         build()
@@ -39,6 +40,9 @@ def predict(data: PredictionInput, request: Request):
         return {'prediction': float(prediction[0])}
     elif data.type == 'temperature':
         prediction = request.app.state.temperatureModel.predict(input_data)
+        return {'prediction': float(prediction[0])}
+    elif data.type == 'light_intensity':
+        prediction = request.app.state.lightIntensityModel.predict(input_data)
         return {'prediction': float(prediction[0])}
     else:
         raise HTTPException(status_code=400, detail="Invalid prediction type")
