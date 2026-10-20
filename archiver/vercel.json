@@ -2,7 +2,7 @@
   "$schema": "https://vercel.sh",
   "crons": [
     {
-      "path": "api/updater",
+      "path": "/api/updater",
       "schedule": "0 0 */7 * *"
     }
   ]
