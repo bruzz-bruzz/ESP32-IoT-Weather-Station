@@ -42,7 +42,7 @@ export default function App(){
     setIsPredicting(true)
     try{
       const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/predict`,{
-        features:[predictDay],
+        features:[new Date(predictDay.valueOf()).getHours()],
         type:predictionType.toLowerCase()
       })
       setPredictionResponse(res.data.data)
@@ -285,7 +285,7 @@ export default function App(){
                 {predictionResponse === null && isPredicting === false && (
                   <p className='text-gray-500 italic'>No predictions available yet.</p>
                 )}
-                {predictionResponse !== null && isPredicting === false && (
+                {predictionResponse !== null && isPredicting === false && typeof predictionResponse === 'number' && (
                   <p className='text-2xl font-bold text-blue-600'>Result: {String(predictionResponse.toFixed(3))}{predictionType === 'Temperature' ? '°C' : predictionType === 'Pressure' ? 'hPa' : '%'}</p>
                 )}
                 {isPredicting === true && (

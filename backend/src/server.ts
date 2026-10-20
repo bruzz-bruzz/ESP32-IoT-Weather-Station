@@ -41,7 +41,7 @@ app.post('/predict',async(req:Request,res:Response<responseType>)=>{
         return res.json({data:predict.data.prediction,ok:true})
     } catch (error) {
         console.log(error)
-        return res.json({data:[],ok:false})
+        return res.json({data:null,ok:false})
     }
 })
 app.listen(3000,()=>{
