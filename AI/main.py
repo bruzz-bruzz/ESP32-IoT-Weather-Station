@@ -11,7 +11,7 @@ class PredictionInput(BaseModel):
     type:str
 @app.post("/predict")
 def predict(data: PredictionInput):
-    input_data = np.array(data.features).reshape(-1,3)
+    input_data = np.array(data.features).reshape(-1,1)
     if data.type == 'pressure':
         prediction = pressureModel.predict(input_data)
         return {"prediction": float(prediction[0])}
