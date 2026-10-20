@@ -32,6 +32,14 @@ app.get('/getData',async(req:Request,res:Response<responseType>)=>{
         return res.json({data:[],ok:false})
     }
 })
+app.get('/archives',async(req:Request,res:Response<responseType>) => {
+    const {data,error} = await supabase.from("sensorarchive").select("*")
+    if(error !== null){
+        return res.status(500).json({data:[],ok:false})
+    }else {
+        return res.json({data:data,ok:true})
+    }
+})
 app.post('/predict',async(req:Request,res:Response<responseType>)=>{
     try {
         const predict = await axios.post(`${process.env.AI_URL}predict`,{

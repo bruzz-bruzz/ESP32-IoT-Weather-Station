@@ -1,7 +1,11 @@
 def getData(col):
     import requests
     from datetime import datetime
-    res = requests.get('https://backend-teal-two-14.vercel.app/getData')
+    from dotenv import load_dotenv
+    import os
+    load_dotenv()
+    res = requests.get(os.getenv("BACKEND"))
+    print(res)
     data = res.json()['data']
     x, y = [], []
     for z in data:
