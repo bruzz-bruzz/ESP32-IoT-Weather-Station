@@ -1,14 +1,9 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "crons": [
     {
       "path": "/api/updater",
       "schedule": "0 0 * * 0"
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/updater",
-      "destination": "/src/api/updater.ts"
     }
   ]
 }
