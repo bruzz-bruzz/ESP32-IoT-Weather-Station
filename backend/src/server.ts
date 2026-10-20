@@ -4,6 +4,7 @@ import {createClient} from '@supabase/supabase-js'
 import cors from 'cors'
 import helmet from 'helmet'
 import dotenv from 'dotenv'
+import axios from 'axios'
 dotenv.config()
 type responseType = {
     data:any,
@@ -28,6 +29,18 @@ app.get('/getData',async(req:Request,res:Response<responseType>)=>{
     if(error === null){
         return res.json({data:data,ok:true})
     }else {
+        return res.json({data:[],ok:false})
+    }
+})
+app.post('/predict',async(req:Request,res:Response<responseType>)=>{
+    try {
+        const predict = await axios.post(`${process.env.AI_URL}predict`,{
+            type:req.body.type,
+            features:req.body.features
+        })
+        return res.json({data:predict.data.prediction,ok:true})
+    } catch (error) {
+        console.log(error)
         return res.json({data:[],ok:false})
     }
 })

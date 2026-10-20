@@ -4,7 +4,7 @@ import axios from 'axios'
 import Github from './Github.tsx'
 import Chart from './Chart.tsx'
 import './App.css'
-type showDataType = 'Graph' | 'Table'
+type showDataType = 'Graph' | 'Table' | 'Predict'
 type chartGraphDataTypes = 'Humidity' | 'Pressure' | 'Temperature' | 'Light Intensity' | 'VOC Index'
 export default function App(){
   const displayMap = {
@@ -19,6 +19,10 @@ export default function App(){
   const [dataType,setDataType] = useState<showDataType>("Graph")
   const [graphType,setGraphType] = useState<chartGraphDataTypes>("Humidity")
   const [currPage,setCurrPage] = useState(0)
+  const [predictDay,setPredictDay] = useState<Number>(new Date().getTime())
+  const [predictionType,setPredictionType] = useState<'Temperature'|'Pressure'|'Humidity'>("Temperature")
+  const [predictionResponse,setPredictionResponse] = useState<null | Number>(null)
+  const [isPredicting,setIsPredicting] = useState(false)
   const [pages,setPages] = useState(0) //10 logs per page
   async function loadData(){
     setLoading(true)
@@ -30,9 +34,20 @@ export default function App(){
     } catch(e){
       setCurrPage(0)
       setPages(0)
-      console.error(e)
     }
     setLoading(false)
+  }
+  async function getPredictions(){
+    setPredictionResponse(null)
+    setIsPredicting(true)
+    try{
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/predict`,{
+        features:[predictDay],
+        type:predictionType.toLowerCase()
+      })
+      setPredictionResponse(res.data.data)
+    }catch(e){}
+    setIsPredicting(false)
   }
   function constructGraphData(){
     let labels:string[] = []
@@ -148,16 +163,19 @@ export default function App(){
             <h2 id='readings-title' className='font-serif text-[1.65rem] font-semibold text-[#173042]'>Sensor log</h2>
           </div>
           <span className='rounded-md bg-[#e9f4ef] px-2.5 py-1.5 text-[0.78rem] font-bold text-[#19706a]'>{logData.length} records</span>
-          <div className='grid grid-cols-2'>
+          <div className='grid grid-cols-3'>
             <button className='m-2 text-center bg-[#f4f8f5] p-2 hover:cursor-pointer' onClick={()=>setDataType("Table")}>Table</button>
             <button className='m-2 text-center bg-[#f4f8f5] p-2 hover:cursor-pointer' onClick={()=>setDataType("Graph")}>Graph</button>
+            <button className='m-2 text-center bg-[#f4f8f5] p-2 hover:cursor-pointer' onClick={()=>setDataType("Predict")}>Predict</button>
           </div>
         </div>
-        {loading ? (
+        {loading === true && (
           <div className='px-6 py-16 text-center text-[#728681]'>Loading sensor readings...</div>
-        ) : logData.length === 0 ? (
+        ) }
+        {logData.length === 0 && (
           <div className='px-6 py-16 text-center text-[#728681]'>No sensor readings are available yet.</div>
-        ) : dataType === 'Table' ? (
+        )} 
+        {loading === false && logData.length > 0 && dataType === 'Table' && (
           <div>
           <div className='overflow-x-auto'>
             <table className='w-full min-w-[800px] border-collapse text-right'>
@@ -203,7 +221,8 @@ export default function App(){
               }}>Next</button>
           </div>
           </div>
-        ) : 
+        )}
+        {loading === false && logData.length > 0 && dataType === 'Graph' && (
         <div>
           <div className='overflow-x-auto'>
             <div className='flex justify-center items-center flex-col'>
@@ -222,7 +241,60 @@ export default function App(){
             </div>
           </div>
         </div>
-        }
+        )}
+        {loading === false && logData.length > 0 && dataType === 'Predict' && (
+          <div className="flex justify-center items-center p-6">
+            <div className='flex flex-col gap-4 p-8 bg-white border border-gray-200 rounded-xl shadow-lg w-full max-w-md'>
+              <h1 className='text-3xl font-bold text-gray-800 text-center'>Predict Weather</h1>
+              
+              <div className='flex flex-col gap-2'>
+                <label className='font-semibold text-gray-600'>Select Date & Time:</label>
+                <input 
+                  type='datetime-local' 
+                  defaultValue={new Date(predictDay.valueOf() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16)} 
+                  className='border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-400 outline-none' 
+                  onChange={(e)=>{
+                    setPredictDay(new Date(e.target.value).getTime())
+                  }} 
+                />
+              </div>
+
+              <div className='flex flex-col gap-2'>
+                <label className='font-semibold text-gray-600'>Prediction Type:</label>
+                <select 
+                  className='border border-gray-300 rounded-lg p-2 bg-[#f4f8f5] text-center focus:ring-2 focus:ring-blue-400 outline-none' 
+                  value={predictionType.toLowerCase()} 
+                  onChange={(e)=>{
+                    setPredictionType(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1) as 'Temperature'|'Pressure'|'Humidity')
+                    setPredictionResponse(null)
+                  }}
+                >
+                  <option value="temperature">Temperature</option>
+                  <option value="pressure">Pressure</option>
+                  <option value="humidity">Humidity</option>
+                </select>
+              </div>
+              <button 
+                className='bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200 shadow-md'
+                onClick={()=>getPredictions()}
+              >
+                Run Prediction
+              </button>
+              
+              <div className='text-center mt-2'>
+                {predictionResponse === null && isPredicting === false && (
+                  <p className='text-gray-500 italic'>No predictions available yet.</p>
+                )}
+                {predictionResponse !== null && isPredicting === false && (
+                  <p className='text-2xl font-bold text-blue-600'>Result: {String(predictionResponse.toFixed(3))}{predictionType === 'Temperature' ? '°C' : predictionType === 'Pressure' ? 'hPa' : '%'}</p>
+                )}
+                {isPredicting === true && (
+                  <p className='text-blue-500 animate-pulse'>Predicting...</p>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </section>
       <Github repoURL="https://github.com/bruzz-bruzz/esp32-iot-weather-station-" profileURL="https://github.com/bruzz-bruzz"/>
     </main>

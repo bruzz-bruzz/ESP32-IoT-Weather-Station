@@ -6,7 +6,6 @@ app = FastAPI()
 pressureModel = joblib.load('models/pressure.pkl')
 humidityModel = joblib.load('models/humidity.pkl')
 temperatureModel = joblib.load('models/temperature.pkl')
-
 class PredictionInput(BaseModel):
     features: list[float]
     type:str
