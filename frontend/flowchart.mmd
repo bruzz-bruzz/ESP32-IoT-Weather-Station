@@ -1,0 +1,22 @@
+---
+config:
+  theme: dark
+---
+graph TD
+    User -->|Views Dashboard| UI[React Dashboard App]
+    
+    subgraph DataVisualizationFlow[Data Visualization Flow]
+        UI -->|On Load/Refresh| FetchLogs[GET /getData]
+        FetchLogs -->|Success| SetState[Set logData, Loading: false]
+        FetchLogs -->|Error| HandleError[Handle Error, Reset State]
+        SetState -->|Process Data| ProcessData[constructGraphData]
+        ProcessData -->|Render| Chart["Render Interactive Charts (Chart.js)"]
+    end
+    
+    subgraph PredictionFlow[AI Prediction Flow]
+        UI -->|Select Date/Type & Click Run| TriggerPredict[Trigger getPredictions]
+        TriggerPredict -->|POST /predict| APIPredict[POST /predict]
+        APIPredict -->|Pending| SetLoading[setIsPredicting: true]
+        APIPredict -->|Success| SetResult[Set predictionResponse, isPredicting: false]
+        SetResult -->|Display| UIResult["Display Prediction Result"]
+    end

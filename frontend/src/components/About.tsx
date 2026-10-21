@@ -13,7 +13,7 @@ export default function About(){
                         <p className='mb-3 text-[0.7rem] font-bold tracking-[0.14em] text-[#19706a]'>ABOUT THE PROJECT</p>
                         <h1 className='max-w-xl font-serif text-4xl font-semibold leading-tight text-[#173042] sm:text-6xl'>Compact IoT Weather Station</h1>
                         <p className='mt-5 max-w-lg text-base leading-7 text-[#60746f]'>A small, connected station that turns environmental signals into useful, real-time data you can understand at a glance.</p>
-                        <Link target='_blank' to='/app'>
+                        <Link target='_blank' to='/'>
                         <p className='underline mt-5 max-w-lg text-base leading-7 text-[#60746f]'>Check it out!</p>
                         </Link>
                     </div>

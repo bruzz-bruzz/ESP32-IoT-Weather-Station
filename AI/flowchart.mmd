@@ -1,0 +1,18 @@
+---
+config:
+  theme: dark
+---
+graph TD
+    subgraph Training Pipeline
+    A[Historical Data] -->|getData.py| B[builder.py]
+    B --> C[Train RandomForest Models]
+    C --> D[Save .pkl Models]
+    end
+    
+    subgraph Serving
+    E[Request] --> F[FastAPI /predict Endpoint]
+    F --> G[Load Models from .pkl]
+    G --> H[Return Prediction]
+    end
+    
+    D -.-> G

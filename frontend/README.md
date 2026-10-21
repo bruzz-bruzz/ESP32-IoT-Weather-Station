@@ -1,32 +1,21 @@
-# React + TypeScript + Vite
+# Weather Station Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+This is a responsive React-based dashboard designed to visualize real-time environmental data collected by the IoT weather station.
 
-Currently, two official plugins are available:
+## How It Works
+- **Tech Stack:** Built with React, Vite, TypeScript, and Tailwind CSS.
+- **Data Visualization:** Uses `Chart.js` for rendering interactive line graphs of sensor data (temperature, humidity, pressure, etc.).
+- **Data Flow:** The application fetches sensor readings from the backend API, which retrieves the data from a Supabase database.
+- **Frontend Structure:**
+  - `src/components/App.tsx`: The main entry point and orchestrator.
+  - `src/components/Chart.tsx`: A reusable wrapper for `Chart.js` to render the line graphs.
+  - `src/components/About.tsx` & `src/components/Github.tsx`: Informational components.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Setup
+1. Install dependencies: `npm install`
+2. Configure `.env`: Set `VITE_BACKEND_URL` to point to the backend API.
+3. Run the development server: `npm run dev`
 
-## React Compiler
+## Flowchart
+![Flowchart Diagram](flowchart.png)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.

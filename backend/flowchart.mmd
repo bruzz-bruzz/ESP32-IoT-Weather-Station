@@ -1,0 +1,13 @@
+---
+config:
+  theme: dark
+---
+graph TD
+    A[Frontend/Client] --> B[Express API]
+    B --> C{Route}
+    C -- /getData --> D[Fetch from Supabase]
+    C -- /archives --> E[Fetch from Supabase]
+    C -- /predict --> F[POST to AI FastAPI Service]
+    D --> G[Return JSON Response]
+    E --> G
+    F --> G

@@ -1,0 +1,11 @@
+---
+config:
+  theme: dark
+---
+graph TD
+    A[Deep Sleep] -->|Timer Wakeup| B[Wake Up]
+    B --> C[Initialize Sensors & WiFi]
+    C --> D[Read Environmental Data]
+    D --> E[Serialize to JSON]
+    E --> F[HTTP POST to Supabase API]
+    F --> G[Enter Deep Sleep]

@@ -246,6 +246,7 @@ export default function App(){
           <div className="flex justify-center items-center p-6">
             <div className='flex flex-col gap-4 p-8 bg-white border border-gray-200 rounded-xl shadow-lg w-full max-w-md'>
               <h1 className='text-3xl font-bold text-gray-800 text-center'>Predict Weather</h1>
+              <p className='italic text-gray-300'>Keep in mind that the AI responses may be delayed as a result of Render's limitations.</p>
               
               <div className='flex flex-col gap-2'>
                 <label className='font-semibold text-gray-600'>Select Date & Time:</label>

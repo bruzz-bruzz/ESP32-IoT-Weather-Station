@@ -1,0 +1,10 @@
+---
+config:
+  theme: dark
+---
+graph TD
+    A[Vercel Cron Trigger] -->|Scheduled Weekly| B[api/updater.ts]
+    B --> C{Authorize}
+    C -->|Valid| D[Fetch Raw Data from 'sensor' Table]
+    D --> E[Upsert to 'sensorarchive' Table]
+    C -->|Invalid| F[Unauthorized]

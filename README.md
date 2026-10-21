@@ -1,7 +1,5 @@
 # IoT Weather Station
 
-![IoT Weather Station logo](frontend/src/assets/weather-station-logo.svg)
-
 A compact, connected weather station dashboard for viewing environmental sensor readings in real time.
 
 ## Features
@@ -37,20 +35,6 @@ npm install
 cd ../frontend
 npm install
 ```
-
-### ESP32 specifications
-
-BOM
-| Component Name | Quantity 
-| --- | ---
-| ESP32 | 1
-| BMP280 | 1
-| SGP40 | 1
-| HW-486 | 1
-| DHT11 | 1
-| Wires | too many to count
-
-ESP32 code is available in ESP32/weather_station.ino
 
 ### Schematic Diagram
 
