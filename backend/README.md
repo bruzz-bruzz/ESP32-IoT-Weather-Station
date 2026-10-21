@@ -2,22 +2,27 @@
 
 Express.js API that bridges the ESP32 sensors and the frontend dashboard using Supabase as the data store.
 
-## Features
-- Serves sensor readings for the frontend.
-- Implements security headers (Helmet), CORS, and rate limiting.
-
-## API Routes
-- **GET** `/getData`: Fetches all sensor readings from the `sensor` table in Supabase. Returns the data or an empty array with a status flag.
-- **GET** `/archives`: Fetches all historical sensor readings from the `sensorarchive` table in Supabase.
-- **POST** `/predict`: Forwards prediction requests to the AI service (defined in `process.env.AI_URL`), expecting `type` and `features` in the body.
-
-## Architecture Flowchart
+## Architecture Diagram
 ![Backend Architecture](flowchart.png)
 
-## Setup
-1. Install dependencies: `npm install`
-2. Configure `.env` with Supabase credentials (`supabaseURL`, `supabaseKey`), `ORIGIN` for CORS, and `AI_URL` for prediction service.
-3. Run: `npm run dev`
+## Setup/Installation
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+## Environment Variables
+Create an `.env` file in this directory based on the configuration defined in `../docs/ENVIRONMENT_VARIABLES.md`.
+
+## Key Files/Logic
+- Provides endpoints for frontend and AI services.
+- Implements security headers (Helmet), CORS, and rate limiting.
+
+## Useful Commands
+- **Run Development:** `npm run dev`
+
+## API Documentation
+Refer to `../docs/API.md` for detailed information on endpoints, payloads, and responses.
 
 ## Database Schema
 - Expects a `sensor` table with columns: `created_at`, `humidity`, `pressure`, `temperature`, `light_intensity`, `voc_index`.

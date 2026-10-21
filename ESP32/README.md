@@ -12,6 +12,16 @@ This directory contains the firmware for the ESP32-based weather station and rel
 - `Schematic.png`: Wiring diagram for the sensor array.
 - `3D Prints`: STL Files used for 3D printing the enclosure.
 
+## Needed Libraries
+- Wire.h
+- WiFi.h
+- HTTPClient.h
+- WiFiClient.h
+- ArduinoJson.h
+- DHT.h
+- Adafruit_BMP280.h
+- Adafruit_SGP40.h
+
 ## Circuit Diagram
 ![Circuit Diagram](Schematic.png)
 

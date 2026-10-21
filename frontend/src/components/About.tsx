@@ -4,6 +4,7 @@ import demoPic from '../assets/Demo.jpeg'
 import schematicPic from '../assets/Schematic.png'
 import Github from './Github.tsx'
 import heroImage from '../assets/hero.png'
+
 export default function About(){
     return(
         <main className='min-h-screen bg-gradient-to-br from-[#edf4f1] via-[#f8faf6] to-[#e7f0ed] px-5 py-10 font-sans text-[#173042] sm:px-8 sm:py-16'>
@@ -12,47 +13,61 @@ export default function About(){
                     <div>
                         <p className='mb-3 text-[0.7rem] font-bold tracking-[0.14em] text-[#19706a]'>ABOUT THE PROJECT</p>
                         <h1 className='max-w-xl font-serif text-4xl font-semibold leading-tight text-[#173042] sm:text-6xl'>Compact IoT Weather Station</h1>
-                        <p className='mt-5 max-w-lg text-base leading-7 text-[#60746f]'>A small, connected station that turns environmental signals into useful, real-time data you can understand at a glance.</p>
+                        <p className='mt-5 max-w-lg text-base leading-7 text-[#60746f]'>
+                            A comprehensive IoT weather station project that monitors environmental conditions using an ESP32-based hardware setup. 
+                            It captures data (temperature, humidity, pressure, light, VOCs), stores it in a Supabase database, and presents 
+                            real-time analytics through a responsive React dashboard. The system also features machine learning 
+                            capabilities to predict future weather patterns based on historical data.
+                        </p>
                         <Link target='_blank' to='/'>
-                        <p className='underline mt-5 max-w-lg text-base leading-7 text-[#60746f]'>Check it out!</p>
+                        <p className='underline mt-5 max-w-lg text-base leading-7 text-[#60746f]'>Check out the dashboard!</p>
                         </Link>
                     </div>
                     <div className='flex justify-center sm:justify-end'>
                         <img className='w-56 drop-shadow-[0_22px_18px_rgba(86,44,180,0.2)] sm:w-72' src={heroImage} alt='Compact IoT weather station device' />
                     </div>
                 </section>
+
                 <section className='py-14 sm:py-20'>
                     <div className='mb-7 flex items-end justify-between gap-4'>
                         <div>
-                            <p className='mb-2.5 text-[0.7rem] font-bold tracking-[0.14em] text-[#19706a]'>WHY IT MATTERS</p>
-                            <h2 className='font-serif text-3xl font-semibold text-[#173042]'>Built for the everyday environment</h2>
+                            <p className='mb-2.5 text-[0.7rem] font-bold tracking-[0.14em] text-[#19706a]'>PROJECT COMPONENTS</p>
+                            <h2 className='font-serif text-3xl font-semibold text-[#173042]'>Built with a modular approach</h2>
                         </div>
-                        <span className='hidden text-3xl text-[#b8d4cb] sm:block'>01—03</span>
                     </div>
-                    <div className='grid gap-4 md:grid-cols-3'>
+                    <div className='grid gap-4 md:grid-cols-2'>
                         <article className='border-t-2 border-[#2da277] bg-white/70 p-6 shadow-sm'>
-                            <span className='text-sm font-bold text-[#2da277]'>01</span>
-                            <h3 className='mt-7 font-serif text-xl font-semibold text-[#173042]'>Compact in size</h3>
-                            <p className='mt-3 text-sm leading-6 text-[#60746f]'>Place it anywhere to collect environmental data without taking over your space.</p>
+                            <h3 className='font-serif text-xl font-semibold text-[#173042]'>ESP32 Hardware</h3>
+                            <p className='mt-3 text-sm leading-6 text-[#60746f]'>
+                                The physical sensor station built with an ESP32, collecting real-time readings in a custom 3D-printed case.
+                            </p>
                         </article>
                         <article className='border-t-2 border-[#d9914b] bg-white/70 p-6 shadow-sm'>
-                            <span className='text-sm font-bold text-[#d9914b]'>02</span>
-                            <h3 className='mt-7 font-serif text-xl font-semibold text-[#173042]'>IoT connectivity</h3>
-                            <p className='mt-3 text-sm leading-6 text-[#60746f]'>Seamlessly log measurements to a database and keep your information in reach.</p>
+                            <h3 className='font-serif text-xl font-semibold text-[#173042]'>Backend API</h3>
+                            <p className='mt-3 text-sm leading-6 text-[#60746f]'>
+                                An Express.js server that bridges the ESP32 sensors and the frontend, with Supabase as the data store.
+                            </p>
                         </article>
                         <article className='border-t-2 border-[#7468b5] bg-white/70 p-6 shadow-sm'>
-                            <span className='text-sm font-bold text-[#7468b5]'>03</span>
-                            <h3 className='mt-7 font-serif text-xl font-semibold text-[#173042]'>Real-time monitoring</h3>
-                            <p className='mt-3 text-sm leading-6 text-[#60746f]'>Track changing conditions as they happen and see the story in your sensor data.</p>
+                            <h3 className='font-serif text-xl font-semibold text-[#173042]'>Frontend Dashboard</h3>
+                            <p className='mt-3 text-sm leading-6 text-[#60746f]'>
+                                A responsive React + Vite application that visualizes data using Chart.js.
+                            </p>
+                        </article>
+                        <article className='border-t-2 border-[#b56868] bg-white/70 p-6 shadow-sm'>
+                            <h3 className='font-serif text-xl font-semibold text-[#173042]'>AI Prediction Engine</h3>
+                            <p className='mt-3 text-sm leading-6 text-[#60746f]'>
+                                A Python-based service using RandomForest models to predict future weather conditions based on historical trends.
+                            </p>
                         </article>
                     </div>
-                        <div className='p-4 m-2 flex justify-center items-center flex-col gap-3'>
-                            <img src={demoPic} className='w-1/2 h-2/3' alt='Demo of the IoT weather station in action' />
-                            <p className='mb-3 text-[0.7rem] font-bold tracking-[0.14em] text-[#19706a]'>PHYSICAL CASE</p>
-                        </div>
-                        <div className='p-4 m-2 flex justify-center items-center flex-col gap-3'>
-                            <img src={schematicPic} className='w-1/2 h-2/3' alt='Schematic of the IoT weather station design' />
-                            <p className='mb-3 text-[0.7rem] font-bold tracking-[0.14em] text-[#19706a]'>SCHEMATIC DIAGRAM</p>
+                    <div className='p-4 m-2 mt-10 flex justify-center items-center flex-col gap-3'>
+                        <img src={demoPic} className='w-1/2 h-2/3' alt='Demo of the IoT weather station in action' />
+                        <p className='mb-3 text-[0.7rem] font-bold tracking-[0.14em] text-[#19706a]'>PHYSICAL CASE</p>
+                    </div>
+                    <div className='p-4 m-2 flex justify-center items-center flex-col gap-3'>
+                        <img src={schematicPic} className='w-1/2 h-2/3' alt='Schematic of the IoT weather station design' />
+                        <p className='mb-3 text-[0.7rem] font-bold tracking-[0.14em] text-[#19706a]'>SCHEMATIC DIAGRAM</p>
                     </div>
                 </section>
                 <footer className='border-t border-[#cbdcd5] pt-5'>
