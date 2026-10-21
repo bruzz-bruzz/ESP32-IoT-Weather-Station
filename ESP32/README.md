@@ -12,6 +12,9 @@ This directory contains the firmware for the ESP32-based weather station and rel
 - `Schematic.png`: Wiring diagram for the sensor array.
 - `3D Prints`: STL Files used for 3D printing the enclosure.
 
+## Circuit Diagram
+![Circuit Diagram](Schematic.png)
+
 ## 3D Prints
 
 The case was 3D-printed using white PLA filament. Total print time was about 6 hours 55 minutes using an Ender 3 V2.
