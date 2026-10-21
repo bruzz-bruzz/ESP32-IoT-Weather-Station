@@ -27,19 +27,39 @@ The IoT Weather Station is a comprehensive project that monitors environmental c
 
 ```text
 .
-├── backend/          # Express API for data retrieval and AI prediction
-│   ├── src/          # Source code
-│   └── .env          # Environment configuration
-├── frontend/         # React + Vite dashboard for data visualization
-│   ├── src/          # React components and logic
-│   ├── flowchart.mmd # Project architecture diagram
-│   └── .env          # Environment configuration
-├── ESP32/            # Hardware design and firmware
-│   ├── *.ino         # ESP32 firmware source code
-│   ├── *.stl         # 3D model files for the weather station case
-│   └── schematic.svg # Hardware circuit diagram
-└── README.md         # Project documentation
+├── AI/                     # Machine Learning model training and inference
+│   ├── models/             # Trained model files (.pkl)
+│   ├── builder.py          # Script for data fetching and model training
+│   ├── getData.py          # Utility for querying the backend API
+│   ├── main.py             # FastAPI application for prediction serving
+│   ├── flowchart.mmd       # AI architecture diagram
+│   ├── flowchart.png       # AI prediction flowchart image
+│   └── requirements.txt    # Python dependencies
+├── backend/                # Express API for data retrieval and AI prediction
+│   ├── src/
+│   │   └── server.ts       # Express server implementation
+│   ├── flowchart.png       # Backend API flowchart image
+│   └── .env                # Environment configuration
+├── ESP32/                  # Hardware design and firmware
+│   ├── weather_station.ino # Firmware source code
+│   ├── 3D Prints/          # 3D model files (.stl)
+│   └── Schematic.png       # Hardware circuit diagram
+├── frontend/               # React + Vite dashboard for data visualization
+│   ├── src/
+│   │   ├── components/     # React components
+│   │   └── main.tsx        # Application entry point
+│   ├── flowchart.mmd       # Frontend architecture diagram
+│   ├── flowchart.png       # Frontend dashboard flowchart image
+│   └── .env                # Environment configuration
+└── README.md               # Project documentation
 ```
+
+## Details
+- [AI](AI/README.md) - AI prediction using machine learning models
+- [ESP32](ESP32/README.md) - IoT weather station hardware and firmware
+- [Frontend](frontend/README.md) - React-based dashboard for data visualization
+- [Backend](backend/README.md) - Node.js backend API for data fetching and storage
+- [Archiver](archiver/README.md) - Data archiving and storage
 
 ## Requirements
 
@@ -59,50 +79,9 @@ cd ../frontend
 npm install
 ```
 
-## Hardware Details
-
 ### Schematic Diagram
 
 ![Schematic Diagram](ESP32/Schematic.png)
-
-### Case specifications
-
-The case was 3D-printed using white PLA filament. Total print time was about 6 hours 55 minutes using an Ender 3 V2.
-
-| Dimension | Length (mm)
-| --- | ---
-| Outer width | 95
-| Outer length | 70
-| Wall thickness | 5
-| Inner width | 85
-| Inner length | 60
-| Slot in holes type 1 length | 10
-| Slot in holes type 1 width | 5
-| Slot in holes type 2 length | 15
-| Slot in holes type 2 width | 5
-
-Cover measurements
-
-| Dimension | Length (mm)
-| --- | --- 
-| Width | 85
-| Length | 60
-| Slot in protrusion type 1 length | 10
-| Slot in protrusion type 1 width | 5
-| Slot in protrusion type 2 length | 15
-| Slot in protrusion type 2 width | 5
-| Vent length | 55
-| Vent width | 3
-| BMP 280 Hole Width | 17
-| BMP 280 Hole Length | 13
-| DHT11 Hole Width | 13
-| DHT11 Hole Length | 20
-| SGP40 Hole Width | 15
-| SGP40 Hole Length | 12
-| HW-486 Hole Width | 21
-| HW-486 Hole Length | 17 
-
-STL files are `ESP32/cover.stl` and `ESP32/outerCase.stl`.
 
 ## Configuration
 
@@ -186,6 +165,7 @@ npm run build
 
 Preview the production build:
 ```bash
+cd frontend
 npm run preview
 ```
 

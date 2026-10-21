@@ -17,5 +17,4 @@ This is a responsive React-based dashboard designed to visualize real-time envir
 3. Run the development server: `npm run dev`
 
 ## Flowchart
-![Flowchart Diagram](flowchart.png)
-
+![Frontend Dashboard Flow](flowchart.png)

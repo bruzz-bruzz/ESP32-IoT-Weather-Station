@@ -2,6 +2,9 @@
 
 This directory contains the machine learning components for the IoT weather station project.
 
+## AI Prediction Flow
+![AI Prediction Flow](flowchart.png)
+
 ## How the Model is Trained
 - **Data Acquisition:** The `builder.py` script uses `getData.py` to fetch historical data from the backend API.
 - **Model Training:** It trains a `RandomForestRegressor` model for each sensor type (temperature, pressure, humidity, light intensity) using `scikit-learn`.
@@ -22,5 +25,5 @@ This directory contains the machine learning components for the IoT weather stat
 ## Usage
 - Train Models: `python builder.py`
 - Start API: `uvicorn main:app --reload`
-- API Endpoint: **POST** `/predict` (expects `features` list and `type`)
+- API Endpoint: **POST** `/predict` (expects `features` list and `type` string)
 

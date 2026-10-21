@@ -9,3 +9,5 @@ Handles the archiving of raw weather data from Supabase to a secondary storage (
   - This function is triggered automatically via Vercel's Cron service, as configured in `vercel.json` (`schedule: "0 0 * * 0"`, which runs at midnight every Sunday).
   - The function validates a `CRON_SECRET` in the authorization header to ensure secure execution.
 
+## Flowchart
+![Archiver CRON Flow](archiver.png)

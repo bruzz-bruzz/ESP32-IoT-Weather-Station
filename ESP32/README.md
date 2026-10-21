@@ -9,9 +9,45 @@ This directory contains the firmware for the ESP32-based weather station and rel
 
 ## Folder Layout
 - `weather_station.ino`: Main Arduino firmware.
-- `schematic.svg`: Wiring diagram for the sensor array (generated via `schematic.py`).
-- `schematic.py`: Script to regenerate the schematic.
+- `Schematic.png`: Wiring diagram for the sensor array.
 - `3D Prints`: STL Files used for 3D printing the enclosure.
+
+## 3D Prints
+
+The case was 3D-printed using white PLA filament. Total print time was about 6 hours 55 minutes using an Ender 3 V2.
+
+| Dimension | Length (mm)
+| --- | ---
+| Outer width | 95
+| Outer length | 70
+| Wall thickness | 5
+| Inner width | 85
+| Inner length | 60
+| Slot in holes type 1 length | 10
+| Slot in holes type 1 width | 5
+| Slot in holes type 2 length | 15
+| Slot in holes type 2 width | 5
+
+Cover measurements
+
+| Dimension | Length (mm)
+| --- | --- 
+| Width | 85
+| Length | 60
+| Slot in protrusion type 1 length | 10
+| Slot in protrusion type 1 width | 5
+| Slot in protrusion type 2 length | 15
+| Slot in protrusion type 2 width | 5
+| Vent length | 55
+| Vent width | 3
+| BMP 280 Hole Width | 17
+| BMP 280 Hole Length | 13
+| DHT11 Hole Width | 13
+| DHT11 Hole Length | 20
+| SGP40 Hole Width | 15
+| SGP40 Hole Length | 12
+| HW-486 Hole Width | 21
+| HW-486 Hole Length | 17 
 
 ## Hardware Components
 - ESP32
@@ -22,3 +58,5 @@ This directory contains the firmware for the ESP32-based weather station and rel
 2. Configure Wi-Fi credentials (`ssid`, `password`) and Supabase endpoints (`supabase_url`, `anon_key`).
 3. Flash the firmware to your ESP32 board.
 
+## Flowchart
+![Hardware flowchart](flowchart.png)
